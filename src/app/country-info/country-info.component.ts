@@ -9,7 +9,15 @@ import { SharedService } from '../shared.service';
   styleUrl: './country-info.component.css'
 })
 export class CountryInfoComponent {
-  data: string | null | undefined;
+  data: {
+    name: string,
+    code: string,
+    capitalCity: string,
+    incomeLevel: string,
+    region: string,
+    latitude: string,
+    longitude: string,
+  } | null | undefined;
 
   constructor(private sharedService: SharedService) {
     this.sharedService.currentData.subscribe(data => this.data = data);

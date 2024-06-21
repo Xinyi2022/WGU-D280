@@ -5,10 +5,26 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class SharedService {
-  private dataSource = new BehaviorSubject<string | null>(null);
+  private dataSource = new BehaviorSubject<{
+    name: string,
+    code: string,
+    capitalCity: string,
+    incomeLevel: string,
+    region: string,
+    latitude: string,
+    longitude: string,
+  } | null | undefined>(null);
   currentData = this.dataSource.asObservable();
 
-  changeData(data: string | null) {
+  changeData(data: {
+    name: string,
+    code: string,
+    capitalCity: string,
+    incomeLevel: string,
+    region: string,
+    latitude: string,
+    longitude: string,
+  } | null | undefined) {
     this.dataSource.next(data);
   }
 }

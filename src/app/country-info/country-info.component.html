@@ -1,2 +1,10 @@
 <p>country-info works!</p>
-<p>{{data}}</p>
+@if (data) {
+<p>Country Name: {{data.name}}</p>
+<p>Country Code: {{data.code}}</p>
+<p>Capitcal City: {{data.capitalCity}}</p>
+<p>Income Level: {{data.incomeLevel}}</p>
+<p>Region: {{data.region}}</p>
+<p>Latitude: {{data.latitude}}</p>
+<p>Longitude: {{data.longitude}}</p>
+}

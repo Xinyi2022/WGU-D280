@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, ElementRef, Renderer2 } from '@angular/core';
 import { SharedService } from '../shared.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'world-map',
@@ -10,12 +11,22 @@ import { SharedService } from '../shared.service';
 })
 export class MapComponent implements AfterViewInit {
 
-  data: string | null | undefined;
+  data: {
+    name: string,
+    code: string,
+    capitalCity: string,
+    incomeLevel: string,
+    region: string,
+    latitude: string,
+    longitude: string,
+  } | null | undefined;
+
 
   constructor(
     private renderer: Renderer2,
     private elementRef: ElementRef,
-    private sharedService: SharedService
+    private sharedService: SharedService,
+    private http: HttpClient
   ) {
     this.sharedService.currentData.subscribe(data => this.data = data);
   }
@@ -45,13 +56,30 @@ export class MapComponent implements AfterViewInit {
 
   onMouseClick(event: MouseEvent): void {
     const target = event.target as SVGPathElement;
-    console.log(
-      'id:', target.getAttribute('id'),
-      'title:', target.getAttribute('title')
-    );
-
-    this.sharedService.changeData(target.getAttribute('id'));
+    this.callWorldBank(target.getAttribute('id'));
   }
 
-
+  callWorldBank(country_code: string | null) {
+    if (country_code == null) {
+      return;
+    }
+    const url = `https://api.worldbank.org/v2/country/${country_code}?format=json`;
+    this.http.get<any>(url).subscribe(
+      response => {
+        const countryInfo = response[1][0];
+        this.sharedService.changeData({
+          name: countryInfo.name,
+          code: countryInfo.id,
+          capitalCity: countryInfo.capitalCity,
+          incomeLevel: countryInfo.incomeLevel.value,
+          region: countryInfo.region.value,
+          latitude: countryInfo.latitude,
+          longitude: countryInfo.longitude,
+        });
+      },
+      error => {
+        console.error('error:', error);
+      }
+    );
+  }
 }
