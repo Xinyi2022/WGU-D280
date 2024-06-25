@@ -4,3 +4,8 @@ h1 {
   color: #4CAF50;
   text-shadow: 2px 2px 5px rgb(222, 211, 198);
 }
+
+p {
+  text-align: center;
+  text-shadow: 2px 2px 5px rgb(222, 211, 198);
+}

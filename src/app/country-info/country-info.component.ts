@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { SharedService } from '../shared.service';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'country-info',
   standalone: true,
-  imports: [],
+  imports: [RouterModule],
   templateUrl: './country-info.component.html',
   styleUrl: './country-info.component.css'
 })

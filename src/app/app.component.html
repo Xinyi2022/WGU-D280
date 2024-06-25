@@ -1,11 +1,14 @@
-<main class="main">
-  <div class="content">
-    <div>
-      <world-map />
-      <country-info />
-      <h1>Hello, {{ title }}</h1>
-      <p>Congratulations! Your app is running. 🎉</p>
+<main class="content">
+  <ul>
+    <li><a routerLink="/">View Map</a></li>
+    <li><a routerLink="/info">Detail only</a></li>
+    <li><a routerLink="/about">About</a></li>
+  </ul>
+  <div>
+    <div class="infoBar">
+      <router-outlet></router-outlet>
+      <country-info class="item" />
     </div>
   </div>
+
 </main>
-<router-outlet />

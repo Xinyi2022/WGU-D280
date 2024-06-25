@@ -1,11 +1,12 @@
 import { AfterViewInit, Component, ElementRef, Renderer2 } from '@angular/core';
 import { SharedService } from '../shared.service';
 import { HttpClient } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'world-map',
   standalone: true,
-  imports: [],
+  imports: [RouterModule],
   templateUrl: './map.component.html',
   styleUrl: './map.component.css'
 })
@@ -36,8 +37,8 @@ export class MapComponent implements AfterViewInit {
   }
 
   loadMap() {
-    const paths = this.elementRef.nativeElement.querySelectorAll('path');
-    paths.forEach((path: SVGPathElement) => {
+    const paths: NodeListOf<SVGPathElement> = this.elementRef.nativeElement.querySelectorAll('path');
+    Array.from(paths).forEach((path: SVGPathElement) => {
       this.renderer.listen(path, 'mouseover', this.onMouseOver.bind(this));
       this.renderer.listen(path, 'mouseout', this.onMouseOut.bind(this));
       this.renderer.listen(path, 'click', this.onMouseClick.bind(this));
